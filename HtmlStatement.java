@@ -22,17 +22,4 @@ public class HtmlStatement extends Statement {
 
         return aux;
     };
-
-    public String value(Customer aCustomer) {
-        Enumeration rentals = aCustomer.getRentals();
-        String result = getResult(aCustomer); //
-        while (rentals.hasMoreElements()) {
-            Rental each = (Rental) rentals.nextElement();
-
-            result += addInfoToResult(each);
-        }
-        //add footer lines
-        result += addFooterLines(aCustomer);
-        return result;
-    }
 }
