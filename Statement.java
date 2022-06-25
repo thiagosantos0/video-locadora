@@ -1,3 +1,5 @@
-public class Statement {
+import java.util.Enumeration;
+
+public abstract class Statement {
 
 }

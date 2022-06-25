@@ -1,22 +1,38 @@
 import java.util.Enumeration;
 
 public class HtmlStatement extends Statement {
+
+    public String getResult(Customer aCustomer){
+        return  "<H1>Rentals for <EM>" + aCustomer.getName() +
+                "</EM></H1><P>\n";
+    }
+
+    public String addInfoToResult(Rental each){
+        return each.getMovie().getTitle() + ": " +
+                String.valueOf(each.getCharge()) + "<BR>\n";
+    }
+
+    public String addFooterLines(Customer aCustomer){
+        String aux = "Amount owed is " +
+                String.valueOf(aCustomer.getTotalCharge()) + "\n";
+
+        aux += "You earned " +
+                String.valueOf(aCustomer.getTotalFrequentRenterPoints()) +
+                " frequent renter points";
+
+        return aux;
+    };
+
     public String value(Customer aCustomer) {
         Enumeration rentals = aCustomer.getRentals();
-        String result = "<H1>Rentals for <EM>" + aCustomer.getName() +
-                "</EM></H1><P>\n";
+        String result = getResult(aCustomer); //
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
-            //show figures for each rental
-            result += each.getMovie().getTitle() + ": " +
-                    String.valueOf(each.getCharge()) + "<BR>\n";
+
+            result += addInfoToResult(each);
         }
         //add footer lines
-        result += "<P>You owe <EM>" +
-                String.valueOf(aCustomer.getTotalCharge()) + "</EM><P>\n";
-        result += "On this rental you earned <EM>" +
-                String.valueOf(aCustomer.getTotalFrequentRenterPoints()) +
-                "</EM> frequent renter points<P>";
+        result += addFooterLines(aCustomer);
         return result;
     }
 }

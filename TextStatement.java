@@ -1,22 +1,37 @@
-
 import java.util.Enumeration;
 public class TextStatement extends Statement {
-    public String value(Customer aCustomer) {
-        Enumeration rentals = aCustomer.getRentals();
-        String result = "Rental Record for " + aCustomer.getName() +
+
+    public String getResult(Customer aCustomer){
+        return "Rental Record for " + aCustomer.getName() +
                 "\n";
-        while (rentals.hasMoreElements()) {
-            Rental each = (Rental) rentals.nextElement();
-            //show figures for this rental
-            result += "\t" + each.getMovie().getTitle()+ "\t" +
-                    String.valueOf(each.getCharge()) + "\n";
-        }
-        //add footer lines
-        result += "Amount owed is " +
+    }
+
+    public String addInfoToResult(Rental each){
+        return "\t" + each.getMovie().getTitle()+ "\t" +
+                String.valueOf(each.getCharge()) + "\n";
+    }
+
+    public String addFooterLines(Customer aCustomer){
+        String aux = "Amount owed is " +
                 String.valueOf(aCustomer.getTotalCharge()) + "\n";
-        result += "You earned " +
+
+        aux += "You earned " +
                 String.valueOf(aCustomer.getTotalFrequentRenterPoints()) +
                 " frequent renter points";
+
+        return aux;
+    };
+
+    public String value(Customer aCustomer) {
+        Enumeration rentals = aCustomer.getRentals();
+        String result = getResult(aCustomer); //
+        while (rentals.hasMoreElements()) {
+            Rental each = (Rental) rentals.nextElement();
+
+            result += addInfoToResult(each);
+        }
+        //add footer lines
+        result += addFooterLines(aCustomer);
         return result;
     }
 }
